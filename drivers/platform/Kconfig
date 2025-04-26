@@ -7,5 +7,4 @@ endif
 
 if ARCH_MSM
 source "drivers/platform/msm/Kconfig"
-source "drivers/platform/fih/Kconfig"
 endif

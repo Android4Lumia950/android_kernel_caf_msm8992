@@ -74,11 +74,7 @@ zinstall install: vmlinux
 
 dtbs: scripts
 	$(Q)$(MAKE) $(build)=$(boot)/dts dtbs
-ifeq ($(CONFIG_MACH_FIH),y)
-	$(Q)$(MAKE) $(build)=$(boot)/dts/fih dtbs
-else
 	$(Q)$(MAKE) $(build)=$(boot)/dts/qcom dtbs
-endif
 
 PHONY += vdso_install
 vdso_install:
@@ -89,7 +85,7 @@ Image-dtb Image.gz-dtb: vmlinux scripts dtbs
 
 # We use MRPROPER_FILES and CLEAN_FILES now
 archclean:
-	$(Q)$(MAKE) $(clean)=$(boot)/dts
+	$(Q)$(MAKE) $(clean)=$(boot)
 
 define archhelp
   echo  '* Image.gz      - Compressed kernel image (arch/$(ARCH)/boot/Image.gz)'
