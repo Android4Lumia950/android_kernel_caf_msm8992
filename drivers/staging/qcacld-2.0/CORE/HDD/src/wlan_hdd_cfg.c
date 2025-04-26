@@ -59,10 +59,6 @@
 #include <csrApi.h>
 #include <pmcApi.h>
 #include <wlan_hdd_misc.h>
-#ifdef CONFIG_MACH_FIH_NBQ
-#include <fih/share/e2p.h>
-#include "../../../../platform/fih/fih_ramtable.h"
-#endif
 
 #if  defined (WLAN_FEATURE_VOWIFI_11R) || defined (FEATURE_WLAN_ESE) || defined(FEATURE_WLAN_LFR)
 static void
@@ -5731,27 +5727,6 @@ static void update_mac_from_string(hdd_context_t *pHddCtx, tCfgIniEntry *macTabl
  */
 VOS_STATUS hdd_update_mac_config(hdd_context_t *pHddCtx)
 {
-#ifdef CONFIG_MACH_FIH_NBQ
-   int i = 0;
-   tSirMacAddr customMacAddr;
-   FIH_CSP_E2P_V02 *e2p;
-
-   e2p = (FIH_CSP_E2P_V02 *)ioremap(FIH_E2P_BASE, sizeof(FIH_CSP_E2P_V02));
-   if (e2p == NULL) {
-      hddLog(VOS_TRACE_LEVEL_WARN, "%s: ioremap fail\n", __func__);
-      return VOS_STATUS_E_FAILURE;
-   }
-
-   for (i = 0; i < VOS_MAC_ADDR_SIZE; i++) {
-      customMacAddr[i] = e2p->wifi_mac[i];
-      pHddCtx->cfg_ini->intfMacAddr[0].bytes[i] = e2p->wifi_mac[i];
-   }
-
-   sme_SetCustomMacAddr(customMacAddr);
-
-   iounmap(e2p);
-   return VOS_STATUS_SUCCESS;
-#else
    int status, i = 0;
    const struct firmware *fw = NULL;
    char *line, *buffer = NULL;
@@ -5835,7 +5810,6 @@ VOS_STATUS hdd_update_mac_config(hdd_context_t *pHddCtx)
 config_exit:
    release_firmware(fw);
    return vos_status;
-#endif
 }
 
 static VOS_STATUS hdd_apply_cfg_ini( hdd_context_t *pHddCtx, tCfgIniEntry* iniTable, unsigned long entries)
