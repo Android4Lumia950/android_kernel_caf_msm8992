@@ -1,0 +1,24 @@
+name: Create toolchain cache
+
+on: workflow_dispatch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache toolchain
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: ./aarch64-linux-android-4.9
+          key: ${{ runner.os }}-gcc4.9-${{ github.sha }}
+          restore-keys: |
+              ${{ runner.os }}-gcc4.9-
+
+      - name: Get toolchain
+        if: ${{ steps.cache.outputs.cache-hit != 'true' }}
+        run: |
+          wget https://github.com/kindle4jerry/aarch64-linux-android-4.9-bakup/archive/refs/heads/main.zip
+          unzip main.zip
+          mv aarch64-linux-android-4.9-bakup-main aarch64-linux-android-4.9
+          
