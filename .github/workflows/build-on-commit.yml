@@ -12,7 +12,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     env:
       VERSION: ${{ github.sha }}       # Use commit SHA as the version
       RELEASE_VERSION: ${{ github.sha }} # Same for release version
