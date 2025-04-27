@@ -39,6 +39,15 @@ jobs:
           repository: kindle4jerry/aarch64-linux-android-4.9-bakup
           path: aarch64-linux-android-4.9
 
+      - name: Install and configure Python 2
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python2 python2-dev python-pip
+          sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 1
+          sudo update-alternatives --set python /usr/bin/python2
+          python --version
+          pip2 install --upgrade pip
+
       - name: Install and configure ccache
         run: |
           sudo apt-get update
