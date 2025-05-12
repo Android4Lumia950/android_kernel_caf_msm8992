@@ -77,7 +77,7 @@ jobs:
         run: echo "DIR=$(pwd)" >> $GITHUB_ENV
 
       - name: Build defconfig
-        run: make ARCH=arm64 mmo-perf_defconfig
+        run: make ARCH=arm64 lineageos_mmo_defconfig
 
       - name: Build kernel
         run: make ARCH=arm64 CROSS_COMPILE=${{ env.DIR }}${{ env.CROSS_COMPILE_PREFIX }} -j$(nproc)
