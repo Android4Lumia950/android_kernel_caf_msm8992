@@ -20,7 +20,7 @@ jobs:
       - name: Checkout kernel repo
         uses: actions/checkout@v4
         with:
-          ref: undervolt
+          ref: julian
           fetch-depth: 0
 
       - name: Cache toolchain
