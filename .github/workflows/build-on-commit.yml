@@ -3,7 +3,7 @@ name: Release build
 on:
   push:
     branches:
-      - undervolt  # Change to your branch name
+      - julian  # Change to your branch name
 
 env:
   CROSS_COMPILE_PREFIX: /aarch64-linux-android-4.9/bin/aarch64-linux-android-
@@ -20,7 +20,7 @@ jobs:
       - name: Checkout kernel repo
         uses: actions/checkout@v4
         with:
-          ref: undervolt
+          ref: julian
           fetch-depth: 0
 
       - name: Cache toolchain
@@ -77,7 +77,7 @@ jobs:
         run: echo "DIR=$(pwd)" >> $GITHUB_ENV
 
       - name: Build defconfig
-        run: make ARCH=arm64 mmo-perf_defconfig
+        run: make ARCH=arm64 lineageos_mmo_defconfig
 
       - name: Build kernel
         run: make ARCH=arm64 CROSS_COMPILE=${{ env.DIR }}${{ env.CROSS_COMPILE_PREFIX }} -j$(nproc)
